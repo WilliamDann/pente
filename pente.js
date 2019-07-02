@@ -83,11 +83,18 @@ class Pente {
     // get fen notation of board
     fen() {
         let str = ""
-        for (let x in this.board) {
-            for (let y in this.board) {
-                str += y;
+        for (let y in this.board) {
+            let blanks = 0;
+            for (let x in this.board) {
+                if (this.board[x][y] == '0') blanks++;
+                else {
+                    str += blanks + '-' + this.board[x][y] + '-';
+                    blanks = 0;
+                }
             }
+            if (blanks != 0) str += blanks;
             str += "/";
         }
+        return str;
     }
 }
