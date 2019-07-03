@@ -95,15 +95,21 @@ class Pente {
     }
 
     // Check if a placment causes a win
-    winCkeck(x, y, left=5) {
+    winCkeck(x, y, left=5, useDirection=null) {
         if (left == 0) return true;
 
-        for (let direction of DIRECTION_TABLE) {
-            if (this.board[y+direction.y][x+direction.y] == ((this.a) ? 'a' : 'b')) {
-                return this.winCkeck(x+direction.x, y+direction.y, left-1);
+        if (!useDirection) {
+            for (let direction of DIRECTION_TABLE) {
+                if (this.board[y+direction.y][x+direction.y] == ((this.a) ? 'a' : 'b')) {
+                    return this.winCkeck(x+direction.x, y+direction.y, left-1, direction);
+                }
+            }
+        } else {
+            if (this.board[y+useDirection.y][x+useDirection.y] == ((this.a) ? 'a' : 'b')) {
+                return this.winCkeck(x+useDirection.x, y+useDirection.y, left-1, useDirection);
             }
         }
-
+            
         return false;
     }
 
