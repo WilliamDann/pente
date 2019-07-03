@@ -12,6 +12,17 @@ const CAPTURE_TABLE = [
     [{x:0, y:0, type:'a'}, {x:1, y:1, type:'b'}, {x:2, y:2, type:'b'}, {x:3, y:3, type:'a'}],
 
 ]
+const DIRECTION_TABLE = [
+    {x:1, y:1},
+    {x:1, y:0},
+    {x:0, y:1},
+    {x:-1, y:-1},
+    {x:0, y:-1},
+    {x:-1, y:0},
+    {x:1, y:-1},
+    {x:-1, y:1},
+]
+
 // Class to store board information
 class Pente {
     constructor(fen=BLANK_GAME) {
@@ -48,6 +59,9 @@ class Pente {
 
         (this.a) ? this.board[y][x] = 'a' : this.board[y][x] = 'b'
         this.captureCheck(x, y);
+        if (this.winCkeck(x, y)) {
+            console.log('win');
+        }
 
         this.a = !this.a;
     }
@@ -78,6 +92,19 @@ class Pente {
                 }
             }
         }
+    }
+
+    // Check if a placment causes a win
+    winCkeck(x, y, left=5) {
+        if (left == 0) return true;
+
+        for (let direction of DIRECTION_TABLE) {
+            if (this.board[y+direction.y][x+direction.y] == ((this.a) ? 'a' : 'b')) {
+                return this.winCkeck(x+direction.x, y+direction.y, left-1);
+            }
+        }
+
+        return false;
     }
 
     // get fen notation of board

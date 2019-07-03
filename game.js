@@ -16,7 +16,7 @@ class Board {
     // draw a pente board
     update() {
         let ctx = this.canvas.getContext('2d');
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
         let x = 1, y = 1;
         for (let dataX of this.game.board) {
